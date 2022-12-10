@@ -1,12 +1,15 @@
 package com.example.parkingapi.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.geolatte.geom.G2D;
 import org.geolatte.geom.Point;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,18 +24,11 @@ public class ParkingLot {
 
     private Point<G2D> coordinate;
 
-    @OneToMany(mappedBy = "parkingLot")
-    private Set<ParkingEvent> parkingEvent = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<ParkingEvent> parkingEvent;
 
     public ParkingLot() {
-    }
-
-    public Set<ParkingEvent> getParkingEvent() {
-        return parkingEvent;
-    }
-
-    public void setParkingEvent(Set<ParkingEvent> parkingEvent) {
-        this.parkingEvent = parkingEvent;
     }
 
     public Point<G2D> getCoordinate() {
@@ -49,5 +45,13 @@ public class ParkingLot {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<ParkingEvent> getParkingEvent() {
+        return parkingEvent;
+    }
+
+    public void setParkingEvent(List<ParkingEvent> parkingEvent) {
+        this.parkingEvent = parkingEvent;
     }
 }
