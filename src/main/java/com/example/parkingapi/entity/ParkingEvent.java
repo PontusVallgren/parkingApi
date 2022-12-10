@@ -27,6 +27,9 @@ public class ParkingEvent {
 
     private Boolean isActive;
 
+    public ParkingEvent() {
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }

@@ -24,6 +24,9 @@ public class ParkingLot {
     @OneToMany(mappedBy = "parkingLot")
     private Set<ParkingEvent> parkingEvent = new HashSet<>();
 
+    public ParkingLot() {
+    }
+
     public Set<ParkingEvent> getParkingEvent() {
         return parkingEvent;
     }

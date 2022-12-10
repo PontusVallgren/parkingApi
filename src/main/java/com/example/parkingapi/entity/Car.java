@@ -3,10 +3,15 @@ package com.example.parkingapi.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -17,13 +22,18 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int REG;
+    private String reg;
 
-    @ManyToOne
-    private Person owners;
+    @ManyToOne // (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    @JsonBackReference
+    private Person person;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<ParkingEvent> parkingEvent = new HashSet<>();
+
+    public Car() {
+    }
 
     public Set<ParkingEvent> getParkingEvent() {
         return parkingEvent;
@@ -33,20 +43,20 @@ public class Car {
         this.parkingEvent = parkingEvent;
     }
 
-    public Person getOwners() {
-        return owners;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setOwners(Person owners) {
-        this.owners = owners;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public int getREG() {
-        return REG;
+    public String getReg() {
+        return reg;
     }
 
-    public void setREG(int rEG) {
-        REG = rEG;
+    public void setReg(String reg) {
+        this.reg = reg;
     }
 
     public Long getId() {
