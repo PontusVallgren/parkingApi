@@ -1,9 +1,9 @@
 package com.example.parkingapi.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -24,22 +24,23 @@ public class Car {
 
     private String reg;
 
-    @ManyToOne // (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "person_id")
     @JsonBackReference
     private Person person;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "car", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<ParkingEvent> parkingEvent = new HashSet<>();
+    private List<ParkingEvent> parkingEvent;
 
     public Car() {
     }
 
-    public Set<ParkingEvent> getParkingEvent() {
+    public List<ParkingEvent> getParkingEvent() {
         return parkingEvent;
     }
 
-    public void setParkingEvent(Set<ParkingEvent> parkingEvent) {
+    public void setParkingEvent(List<ParkingEvent> parkingEvent) {
         this.parkingEvent = parkingEvent;
     }
 

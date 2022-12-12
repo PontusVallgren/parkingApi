@@ -21,6 +21,9 @@ public class ParkingEvent {
     @ManyToOne
     private ParkingLot parkingLot;
 
+    @ManyToOne
+    private Person person;
+
     private LocalDateTime startTime;
 
     private LocalDateTime stopTime;
@@ -28,6 +31,22 @@ public class ParkingEvent {
     private Boolean isActive;
 
     public ParkingEvent() {
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public LocalDateTime getStartTime() {
@@ -54,27 +73,19 @@ public class ParkingEvent {
         this.isActive = isActive;
     }
 
-    public ParkingLot getParkingLot() {
-        return parkingLot;
-    }
-
-    public void setParkingLot(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 }
